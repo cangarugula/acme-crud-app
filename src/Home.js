@@ -1,16 +1,17 @@
-import React,{Component} from 'react'
+import React from 'react'
 
-export default class Home extends Component {
+const Home =({users})=> {
 
-  render() {
-    return (
-      <div>
-        <h1>Home</h1>
-        <hr />
-        <p>
-          Welcome to Acme Users! We have {this.props.users.length} users!
-        </p>
-      </div>
-    )
-  }
+  return (
+    <div>
+      <h1>Home</h1>
+      <hr />
+      <p>
+        Welcome to Acme Users! We have {users.length} users!
+      </p>
+    </div>
+  )
+
 }
+
+export default Home

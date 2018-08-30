@@ -6,6 +6,7 @@ class UserUpdate extends Component {
       <div>
         <h3>Update User</h3>
         <hr />
+
         <form>
           <label>Name:</label>
           <input type='text' name='name'></input>

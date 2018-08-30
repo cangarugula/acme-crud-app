@@ -41,8 +41,6 @@ app.delete('/api/users/:id', (req,res,next) => {
       id: req.params.id
     }
   })
-  .then(()=> next() )
-  .catch(next)
 })
 
 syncAndSeed()
