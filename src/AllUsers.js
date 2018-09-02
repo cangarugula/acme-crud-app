@@ -10,7 +10,7 @@ const Users = ({users,deleteUser})=> {
         <hr />
         {users.map(user => (
           <ul key={user.id}>
-            <Link to='/users/update'>{user.name}</Link> <button type='submit' value={user.id} onClick={(event)=> deleteUser(user.id,event) }>X</button>
+            <Link to={`/users/update/${user.id}`} >{user.name}</Link> <button key={user.id} type='submit' value={user.id} onClick={(event)=> deleteUser(user.id,event) }>X</button>
             <hr />
           </ul>
         ))}

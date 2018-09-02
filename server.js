@@ -3,7 +3,7 @@ const path = require('path')
 const { User, syncAndSeed } = require('./db')
 const app = express()
 
-app.use(require('body-parser').urlencoded({extended: false}))
+app.use(require('body-parser').json())
 
 app.get('/',(req,res,next) => {
   res.sendFile(path.join(__dirname,'index.html'))
@@ -32,6 +32,7 @@ app.post('/api/add',(req,res,next) => {
 app.put('/api/users/:id', (req,res,next) => {
   User.findById(req.params.id)
     .then(user => user.update(req.body))
+    .then(user => res.send(user))
     .catch(next)
 })
 

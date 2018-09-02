@@ -15,6 +15,8 @@ class Main extends Component {
       users: []
     }
     this.deleteUser = this.deleteUser.bind(this)
+    this.addUser = this.addUser.bind(this)
+    this.updateUser = this.updateUser.bind(this)
   }
 
   componentDidMount() {
@@ -22,24 +24,38 @@ class Main extends Component {
     .then(response => this.setState({users: response.data}))
   }
 
-  deleteUser(id,event) {
-    event.preventDefault()
+  deleteUser(id) {
     const users = this.state.users.filter(user => user.id !== id)
     axios.delete(`/api/users/${id}`)
-    .then( ()=> this.setState({users}))
+    this.setState({users})
+  }
+
+  addUser(user) {
+    const users = this.state.users.concat([user])
+    this.setState({users})
+  }
+
+  updateUser(user) {
+    const users = this.state.users.map((_user,i) => {
+      if(_user.id === user.id) {
+        _user = user
+      }
+      return _user
+    })
+    this.setState({users})
   }
 
 
   render(){
-    console.log(this.state.users)
+
     return (
       <div>
-        <NavBar users={this.state.users} onClick={this.onClick}/>
+        <NavBar users={this.state.users} />
         <Route exact path='/' render={()=> <Home users={this.state.users} />}></Route>
-        <Route path='/home' render={ ()=> <Home users={this.state.users} />}></Route>
+        <Route path='/home' render={()=> <Home users={this.state.users} />}></Route>
         <Route path='/users' render={()=> <Users users={this.state.users} deleteUser={this.deleteUser}/>}></Route>
-        <Route path='/users/create' component={UserCreate}></Route>
-        <Route exact path='/users/update' component={UserUpdate}></Route>
+        <Route path='/users/create' render={()=> <UserCreate addUser={this.addUser}/>}></Route>
+        <Route path='/users/update/:id' render={(props)=> <UserUpdate updateUser={this.updateUser} id={props.match.params.id}/>}></Route>
       </div>
     )
   }
